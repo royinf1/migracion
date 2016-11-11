@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>sudo apt-get update &amp;&amp; sudo apt-get -y install wget curl build-essential &amp;&amp; git clone https://github.com/wazuh/ossec-wazuh.git -b master &amp;&amp; wget https://scan.coverity.com/download/linux64 --post-data &quot;token=U0ierbU04gM7GGaPZEXazQ&amp;project=wazuh%2Fossec-wazuh&quot; -O coverity_tool.tgz &amp;&amp; tar -zxvf coverity_tool.tgz &amp;&amp; mv cov-analysis* cov-analysis &amp;&amp; cd ossec-wazuh/ &amp;&amp; cd src/ &amp;&amp; ../../cov-analysis/bin/cov-build --dir cov-int make TARGET=agent &amp;&amp; tar czvf wazuhossec.tgz cov-int &amp;&amp; curl --form token=U0ierbU04gM7GGaPZEXazQ --form email=jesus.marin@wazuh.com --form file=@wazuhossec.tgz --form version=&quot;1.1-master-1&quot; --form description=&quot;First scan of master branch&quot; https://scan.coverity.com/builds?project=wazuh%2Fossec-wazuh
+</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers/>
+  <buildWrappers/>
+</project>
